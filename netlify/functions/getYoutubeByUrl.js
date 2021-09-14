@@ -1,22 +1,28 @@
 require('dotenv').config()
 const axios = require('axios')
 const YOUTUBE_KEY = process.env.YOUTUBE_KEY
+
+// Initialize the algolia client
 const algolia = require('algoliasearch')
 const client = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY)
 
 
 const handler = async (event) => {
   try {
+    // Get the url from the event query
     const {videoUrl, index=false} = event.queryStringParameters
     // get id from youtube url
     const id = videoUrl.split('v=')[1].split('&')[0]
-   
+    // Build the URL to fetch
     const fetchUrl = `https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_KEY}&part=snippet,statistics&id=${id}`
+    // Get the video data from youtube
     const videoData = await axios.get(fetchUrl)
+    // Get the video data from youtube, it comes as an array
     const {items: videos} = videoData.data
     const {snippet, statistics} = videos[0]
     const {title, description, thumbnails} = snippet
     const {viewCount, likeCount, favoriteCount, commentCount} = statistics
+    // Build the object to be indexed
     const dataForIndex = {
       title,
       description,
@@ -31,7 +37,7 @@ const handler = async (event) => {
       objectID: id
     }
     if (index) {
-      // Index the videos to algolia
+      // If the index value is passed, index the object
       const index = client.initIndex(process.env.VIDEO_INDEX)
       // save or update the videos in index
       try {
