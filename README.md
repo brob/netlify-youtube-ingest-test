@@ -37,11 +37,22 @@ The function requires environment variables to connect to the YouTube API and an
  
 ## Usage
 
-After installation, hit the following endpoint in your Netlify site:
+After installation, you'll have access to the following endpoints on your Netlify site:
 
-`<siteURL>/.netlify/functions/getYoutube?channelID=<your channel id>&maxResults=<number of results>&index=<true/false to index>`
-
+`/.netlify/functions/getYoutubeJson`
+`/.netlify/functions/getYoutubeByUrl`
 ## Parameters 
+
+### `getYoutubeJson
+
+```sh
+/.netlify/functions/getYoutubeJson
+        ?channelID=<your channel id>
+        
+        &maxResults=<number of results>
+        
+        &index=<true/false to index>
+```
 
 |parameter|type|what it does|
 |---|----|---|
@@ -49,3 +60,9 @@ After installation, hit the following endpoint in your Netlify site:
 | `maxResults` | `string` | How many results to return (this is ordered by date, so it will get "latest" `n` videos) |
 | `index` | `boolean` | if `true` will submit the videos in the list to Algolia (using env variables) if `false` will just display JSON in the body of the response
 
+### `getYoutubeByUrl`
+
+|parameter|type|what it does|
+|-------|----|------|
+|`videoUrl` | `string` | The URL to the youtube video (this is the way to get it in IFTTT). This will be used to get the ID of the video|
+| `index` | `boolean` | if `true` will submit the videos in the list to Algolia (using env variables) if `false` will just display JSON in the body of the response |

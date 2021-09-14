@@ -4,7 +4,6 @@ const YOUTUBE_KEY = process.env.YOUTUBE_KEY
 const algolia = require('algoliasearch')
 const client = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY)
 
-
 const handler = async (event) => {
   try {
     const {channelId, maxResults=20, index=false} = event.queryStringParameters
@@ -54,8 +53,6 @@ const handler = async (event) => {
         body: JSON.stringify(normalizedVideos)
       }
     }
-    
-    
   } catch (error) {
     console.log(error)
     return { statusCode: 500, body: error.toString() }
