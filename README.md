@@ -28,8 +28,7 @@ The function requires environment variables to connect to the YouTube API and an
 |`ALGOLIA_APP_ID`| The Algolia app ID |
 |`ALGOLIA_API_KEY`| Your Algolia API key. This needs write permissions to write to the index |
 |`VIDEO_INDEX`| The Index name where your search index will be stored in Algolia |
-|
-
+ 
 ## Usage
 
 After installation, hit the following endpoint in your Netlify site:
