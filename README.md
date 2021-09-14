@@ -18,6 +18,12 @@ Install the dependencies:
 npm install algoliasearch axios dotenv
 ```
 
+To run locally, use [the Netlify Dev CLI](https://www.netlify.com/products/dev/).
+
+```sh
+netlify dev
+```
+
 ### Environment variables
 
 The function requires environment variables to connect to the YouTube API and an Algolia index.
