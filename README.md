@@ -62,6 +62,8 @@ After installation, you'll have access to the following endpoints on your Netlif
 
 ### `getYoutubeByUrl`
 
+This endpoint is mostly intended to be used with an IFTTT Applet. IFTTT has a Trigger action that is for new YouTube video on a channel. When there's a new video, it can then fire a webhook to this endpoint and provide the URL for the video. The endpoint then gets the video ID from the video and indexes the video content and id.
+
 |parameter|type|what it does|
 |-------|----|------|
 |`videoUrl` | `string` | The URL to the youtube video (this is the way to get it in IFTTT). This will be used to get the ID of the video|

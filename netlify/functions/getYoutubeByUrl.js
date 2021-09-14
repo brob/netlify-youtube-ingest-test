@@ -30,7 +30,6 @@ const handler = async (event) => {
       tags: snippet.tags,
       objectID: id
     }
-    console.log(dataForIndex)
     if (index) {
       // Index the videos to algolia
       const index = client.initIndex(process.env.VIDEO_INDEX)
