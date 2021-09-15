@@ -6,11 +6,10 @@ const YOUTUBE_KEY = process.env.YOUTUBE_KEY
 const algolia = require('algoliasearch')
 const client = algolia(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY)
 
-
 const handler = async (event) => {
   try {
     // Get the url from the event query
-    const {videoUrl, index=false} = event.queryStringParameters
+    const { videoUrl, index = false } = event.queryStringParameters
     // get id from youtube url
     const id = videoUrl.split('v=')[1].split('&')[0]
     // Build the URL to fetch
@@ -18,10 +17,10 @@ const handler = async (event) => {
     // Get the video data from youtube
     const videoData = await axios.get(fetchUrl)
     // Get the video data from youtube, it comes as an array
-    const {items: videos} = videoData.data
-    const {snippet, statistics} = videos[0]
-    const {title, description, thumbnails} = snippet
-    const {viewCount, likeCount, favoriteCount, commentCount} = statistics
+    const { items: videos } = videoData.data
+    const { snippet, statistics } = videos[0]
+    const { title, description, thumbnails } = snippet
+    const { viewCount, likeCount, favoriteCount, commentCount } = statistics
     // Build the object to be indexed
     const dataForIndex = {
       title,
@@ -41,26 +40,27 @@ const handler = async (event) => {
       const index = client.initIndex(process.env.VIDEO_INDEX)
       // save or update the videos in index
       try {
+        // Index the object, though it needs to be an array
         const response = await index.saveObjects([dataForIndex])
-        console.log(response)
+
         return {
           statusCode: 200,
           body: JSON.stringify(dataForIndex)
         }
-      } catch(err) {
+      } catch (err) {
         return {
           statusCode: 500,
           body: JSON.stringify({
             message: 'Error saving videos to algolia' + JSON.stringify(err)
           })
         }
-      }   
+      }
     } else {
       return {
         statusCode: 200,
         body: JSON.stringify(dataForIndex)
       }
-    }   
+    }
   } catch (error) {
     console.log(error)
     return { statusCode: 500, body: error.toString() }
